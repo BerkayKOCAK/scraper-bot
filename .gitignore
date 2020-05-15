@@ -1,0 +1,6 @@
+## Ignore big files like img/png...
+## -- not complete
+
+*.img
+*.png
+*.jpg
