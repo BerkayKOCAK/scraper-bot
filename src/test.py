@@ -4,6 +4,9 @@ import requests #it is a blocking library by nature !
 import asyncio
 import urllib
 from urllib3.exceptions import NewConnectionError
+
+#There is a 3rd-party library called "aiohttp". It can be also used to make requests.
+
 """
 headers = {
     'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -116,7 +119,7 @@ def GET_request ():
     
    
         
-async def GET_request_async ():
+async def GET_request_async (callName,input):
     """
     Asyncio used here with event based logic.
 
@@ -125,33 +128,96 @@ async def GET_request_async ():
     loop = asyncio.get_event_loop()
     try:
         future1 = loop.run_in_executor(None, requests.get, 'http://www.google.com')
-        future2 = loop.run_in_executor(None, requests.get, 'https://www.hepsiburada.com/masaustu-bilgisayarlar-c-34',headers )
+        future2 = loop.run_in_executor(None, requests.get, 'https://www.gittigidiyor.com/dizustu-laptop-notebook-bilgisayar',headers )
         
         response1 = await future1
         response2 = await future2
-
+        print("TASK NAME : " + callName)
+        print("INPUT INDEX : " + str(input))
+        
         print("response1 : "+response1.url)
 
-        print("response2 : "+response2.text)
-        print("headers : "+str(response2.headers)) 
+        #print("response2 : "+response2.text)
+        #print("headers : "+str(response2.headers)) 
         print("response2 : "+response2.url) 
     except Exception as e:
         print(" @@@@ ERROR IN ASYNCH CALL @@@@ \n MESSAGE : "+ str(e))
-        
+    return  response1.url   
     
-    
-    
-    """  
-    response = await requests.get("https://www.google.com/")
-    print("RESPONSE : " )
-    print(response)"""
 
-#There is a 3rd-party library called "aiohttp". It can be also used to make requests.
+
+async def queued_coroutines (callName,input):
+    """
+    Puts scaraping tasks to a queue, it scrapes every step on the loop and waits that step to finish.
+    """
+    event_loop = asyncio.get_event_loop()
+    try:
+        
+        scraper_calls = input
+        for call_element in scraper_calls:            
+            promise = await event_loop.run_in_executor(None,GET_request_async,callName,call_element)
+            scraper_response = await promise
+            print(" - MULTITASKING - " + str(scraper_response))
+
+    except Exception as e:
+        print(" @@@@ ERROR IN MULTITASKING  @@@@ \n MESSAGE : "+ str(e))
+
+async def worker():
+    print("Starting work")
+    await asyncio.sleep(5)
+    print("Work complete")
+ 
+async def other_worker():
+    print("Starting other worker")
+    await asyncio.sleep(2)
+    print("Other worker complete")
+ 
+async def third_worker():
+    print("Starting third worker")
+    await asyncio.sleep(1)
+    print("Third worker complete")
+ 
+async def append_task_to_coroutine():
+    print("Starting workers")
+    tasks = []
+    tasks.append(asyncio.ensure_future(worker()))
+    tasks.append(asyncio.ensure_future(other_worker()))
+ 
+    print("First two workers added to the event loop.")
+    for task in tasks:
+        await task
+ 
+    print("Adding third worker to the event loop.")
+    await third_worker()
+    # in this case, this is the same thing
+    await asyncio.ensure_future(third_worker())
+ 
+
+
+
+async def concurrent_coroutines(input):
+    """
+    Schedule three calls *concurrently*:
+
+    Runs scraping tasks parallel, gathers results of 3 tasks at every tick.
+    """
+    await asyncio.gather(
+        queued_coroutines("A", [1,2]),
+        queued_coroutines("B", [3,4,5,9]),
+        queued_coroutines("C", [7,8,83,5,0]),
+    ) 
+
 
 #test_parser_page("Hepsiburada.html")
 #test_parser_product("hepsiburada-example/Bilgisayar.html")
+arg = [1,2,3,4,5,6,7]
+def main(parameter_list):
+    #asyncio.run(queued_coroutines("callName",arg))
+    #asyncio.run(concurrent_coroutines(0))
+    asyncio.run(append_task_to_coroutine())
 
-GET_request()
+main(0)
+#GET_request()
 """
 try:
     loop = asyncio.get_event_loop()
