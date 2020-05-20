@@ -1,7 +1,7 @@
    
 websites = [
     {
-    "hepsiburada" : 
+    "Hepsiburada" : 
         {
             "name": "hepsiburada",
             'product-scope' : 
@@ -14,35 +14,52 @@ websites = [
             
                 {
                     'title': 'h3',
+                    'title_regex' : '.*title.*',
                     'price': 'span',
+                    'price_regex' : '.*price.*',
                     'old_price': 'del'
                 }
         },
-    "vatan" : 
+    "Vatan" : 
         {
-            "name": "hepsiburada",
+            "name": "vatan",
             'product-scope' : 
             
                 {
                     'element': 'div',
-                    'name': 'box product'
+                    'name': 'product-list product-list--list-page'
                 },        
             'child-element' : 
             
                 {
-                    'title': 'h3',
+                    'title': 'div',
+                    'title_regex' : '.*name.*',
                     'price': 'span',
-                    'old_price': 'del'
+                    'price_regex' : '.*price.*',
+                    'old_price': ''
                 }
         }
 
     }
 ]
 
-
+products = {
+    "Hepsiburada" : 
+        {
+            'products' : {}
+            #key: product name, value: file path
+        },
+    "Vatan" : 
+        {
+            'products' : {}
+            #key: product name, value: file path
+        }
+ }
 
 """
-print(str(websites[0].keys()))
-for target_list in websites[0].keys():
+print(str(products.get("Hepsiburada")))
+products.get("Hepsiburada")['key2'] = 'for'
+print(str(products.get("Hepsiburada")))
+for target_list in products.keys():
    print(str(target_list))
 """

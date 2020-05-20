@@ -12,12 +12,12 @@ Additional libraries:
 """
 
 from __future__ import print_function, unicode_literals
-import src.scraper
-import src.utils
+from src import scraper, utils
+
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
 from pyfiglet import Figlet
-
+import asyncio
 
 style1 = style_from_dict({
     Token.Separator: '#cc5454',
@@ -70,6 +70,8 @@ website_selection = [
     }
 ]
 
+#TODO - get product names from files uploaded and start mapping here.
+
 product_selection = [
     {
         'type': 'checkbox',
@@ -93,12 +95,12 @@ product_selection = [
                 'disabled': 'coming soon!'
             },
             {
-                'name': 'Akıllı-Telefon',
-                'disabled': 'coming soon!'
+                'name': 'Telefon',
+                #'disabled': 'coming soon!'
             },
             {
-                'name': 'Buzdolabı',
-                'disabled': 'coming soon!'
+                'name': 'Tabletler',
+                #'disabled': 'coming soon!'
             }
            
         ],
@@ -118,8 +120,10 @@ def main ():
         products = prompt(product_selection, style=style2)
 
         if(len(websites['websites']) != 0 and len(products['products']) != 0):
-            pprint(websites)
+            pprint(websites['websites'])
             pprint(products)
+           
+            asyncio.run(scraper.scraper_init(websites['websites'], products['products']))
             #init_scraping()
             break
         else:
