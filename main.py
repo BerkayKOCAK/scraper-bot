@@ -12,7 +12,7 @@ Additional libraries:
 """
 
 from __future__ import print_function, unicode_literals
-from src import scraper, utils
+from src import scraper, utils, scrape_elements
 
 from PyInquirer import style_from_dict, Token, prompt, Separator
 from pprint import pprint
@@ -38,31 +38,13 @@ style2 = style_from_dict({
     Token.Answer: '#AF601A bold',
     Token.Question: '#EC7063',
 })
-website_selection = [
+template_vendor_selection = [
     {
         'type': 'checkbox',
         'message': 'Selected Options',
-        'name': 'websites',
+        'name': 'vendors', #name of selected items array
         'choices': [
-            Separator(' = Websites = '),
-            {
-                'name': 'Hepsiburada',
-            },
-            {
-                'name': 'Gittigidiyor'
-            },
-            {
-                'name': 'n11'
-            },
-            {
-                'name': 'Akakçe'
-            },
-            {
-                'name': 'Vatan'
-            },
-            {
-                'name': 'Teknosa'
-            }
+            Separator(' = Vendors = ')
            
         ],
         'validate': lambda answer: 'You must choose at least one topping.' \
@@ -72,37 +54,14 @@ website_selection = [
 
 #TODO - get product names from files uploaded and start mapping here.
 
-product_selection = [
+template_product_selection = [
     {
         'type': 'checkbox',
         'message': 'Selected Options',
         'name': 'products',
         'choices': [
-            Separator(' = Products = '),
-            {
-                'name': 'Laptop',
-            },
-            {
-                'name': 'Desktop',
-                'disabled': 'coming soon!'
-            },
-            {
-                'name': 'Tablet',
-                'disabled': 'coming soon!'
-            },
-            {
-                'name': 'Televizyon',
-                'disabled': 'coming soon!'
-            },
-            {
-                'name': 'Telefon',
-                #'disabled': 'coming soon!'
-            },
-            {
-                'name': 'Tabletler',
-                #'disabled': 'coming soon!'
-            }
-           
+            Separator(' = Products = ')
+    
         ],
         'validate': lambda answer: 'You must choose at least one topping.' \
             if len(answer) == 0 else True
@@ -115,16 +74,30 @@ def main ():
     print(f.renderText(' - SCRAPER - '))
     print(f.renderText(' * By Berkay * '))
 
-    while(True):
-        websites = prompt(website_selection, style=style1)
-        products = prompt(product_selection, style=style2)
+    #TODO - TRY CATCH SECTION HERE TO INIT SUB-FUNCS
+    utils.vendor_folder_mapping()
+    vendor_selection = utils.menu_add_vendors(template_vendor_selection)
 
-        if(len(websites['websites']) != 0 and len(products['products']) != 0):
-            pprint(websites['websites'])
-            pprint(products)
-           
-            asyncio.run(scraper.scraper_init(websites['websites'], products['products']))
-            #init_scraping()
+
+    while(True):
+        vendors = prompt(vendor_selection, style=style1)
+        
+
+        if(len(vendors['vendors']) != 0):
+            print("Selected Vendors : "+str(vendors['vendors']))
+            asyncio.run(utils.timeout(1))
+
+            for vendor in vendors['vendors']:
+                utils.product_file_mapping(vendor)
+            
+            print(scrape_elements.products)
+            product_selection = utils.menu_add_products(template_product_selection)
+            products = prompt(product_selection, style=style2)
+
+            if (len(products['products']) != 0):
+                print("Selected Products : "+str(products['products']))
+                asyncio.run(utils.timeout(1))
+                asyncio.run(scraper.scraper_init(vendors['vendors'], products['products']))
             break
         else:
             pass

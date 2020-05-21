@@ -12,7 +12,7 @@ from src import utils, scrape_elements
 from pathlib import Path
 import os
 import asyncio
-
+#TODO - comment
 async def scraper_init (vendors,selected_products):
     
     for vendor in vendors:
@@ -34,7 +34,7 @@ async def scraper_init (vendors,selected_products):
             scraper_queue("C",["hepsiburada"],file_list),
         ) """
 
-
+#TODO - review, comment
 async def scraper_queue(vendor,file_list,selected_products):
 
     count = 0
@@ -83,16 +83,9 @@ async def scraper_queue(vendor,file_list,selected_products):
     except Exception as e:
         print(" @@@@ ERROR IN QUEUE  @@@@ \n MESSAGE : "+ str(e))
 
+#TODO - comment
 async def product_scraper(taskName,soup,website,product):
     
-    """
-    if taskName == "1":
-        await asyncio.sleep(5)
-    elif taskName == "2":
-        await asyncio.sleep(10)
-    elif taskName == "3":
-        await asyncio.sleep(3)
-    """
     print("VENDOR : "+website.get("name")+" PRODUCT : "+product)
     try:
         
@@ -107,6 +100,7 @@ async def product_scraper(taskName,soup,website,product):
             child_old_price = child.find(website["child-element"]["old_price"], {"class" : regex_price})
             
             #strip the text from dom element
+            #TODO - Write scraped data to a csv
             if child_title:
                 print(taskName+" PRODUCT : "+ child_title.text.strip())
             

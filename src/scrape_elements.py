@@ -1,7 +1,12 @@
-   
+#TODO - comment
+
+#Websites has different kind of dom elements and management for each unique vendor.
+#Thus you need to add your elements to scrape like default ones. (hepsiburada,vatan,gittigidiyor...) 
+#Website names are case sensitive!
+#Non used items can be NULL.
 websites = [
     {
-    "Hepsiburada" : 
+    "hepsiburada" : 
         {
             "name": "hepsiburada",
             'product-scope' : 
@@ -20,7 +25,7 @@ websites = [
                     'old_price': 'del'
                 }
         },
-    "Vatan" : 
+    "vatan" : 
         {
             "name": "vatan",
             'product-scope' : 
@@ -43,7 +48,10 @@ websites = [
     }
 ]
 
+#EXAMPLE USAGE
+"""
 products = {
+    
     "Hepsiburada" : 
         {
             'products' : {}
@@ -54,7 +62,9 @@ products = {
             'products' : {}
             #key: product name, value: file path
         }
- }
+}
+"""
+products = {}
 
 """
 print(str(products.get("Hepsiburada")))
