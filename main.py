@@ -4,6 +4,7 @@
 
         CLI Web page scraper for product prices.
 
+Written with Python 3.7.3
 Additional libraries:
     *Beautiful Soup 4.9^
     *PyInquirer
@@ -52,7 +53,6 @@ template_vendor_selection = [
     }
 ]
 
-#TODO - get product names from files uploaded and start mapping here.
 
 template_product_selection = [
     {
@@ -74,15 +74,17 @@ def main ():
     print(f.renderText(' - SCRAPER - '))
     print(f.renderText(' * By Berkay * '))
 
-    #TODO - TRY CATCH SECTION HERE TO INIT SUB-FUNCS
-    utils.vendor_folder_mapping()
-    vendor_selection = utils.menu_add_vendors(template_vendor_selection)
 
-
+    try:
+        utils.vendor_folder_mapping()
+        vendor_selection = utils.menu_add_vendors(template_vendor_selection)
+    except Exception as identifier:
+        print(" - ERROR AT MAPPING INITALIZE -")
+        print(identifier)
+    
     while(True):
-        vendors = prompt(vendor_selection, style=style1)
         
-
+        vendors = prompt(vendor_selection, style=style1)
         if(len(vendors['vendors']) != 0):
             print("Selected Vendors : "+str(vendors['vendors']))
             asyncio.run(utils.timeout(1))
@@ -92,12 +94,14 @@ def main ():
             
             print(scrape_elements.products)
             product_selection = utils.menu_add_products(template_product_selection)
-            products = prompt(product_selection, style=style2)
-
-            if (len(products['products']) != 0):
-                print("Selected Products : "+str(products['products']))
-                asyncio.run(utils.timeout(1))
-                asyncio.run(scraper.scraper_init(vendors['vendors'], products['products']))
+            if(len(product_selection[0].get("choices"))>1):
+                products = prompt(product_selection, style=style2)
+                if (len(products['products']) != 0):
+                    print("Selected Products : "+str(products['products']))
+                    asyncio.run(utils.timeout(1))
+                    asyncio.run(scraper.scraper_init(vendors['vendors'], products['products']))
+            else:#maybe throw this during mapping
+                print("No Product File Found For Vendor : "+str(vendors['vendors']))
             break
         else:
             pass

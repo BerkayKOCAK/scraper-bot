@@ -10,9 +10,10 @@ from pathlib import Path
 from src import scrape_elements
 #import scrape_elements
 
+
 def get_file_list(vendor):
     """
-    Reads "html-to-scrape" folder to make a list from *only* html pages.\n
+    Reads given vendor folder to make a list from *only* html pages.\n
     Returns file paths. 
     """
     arranged_file_list = []
@@ -31,6 +32,7 @@ def get_file_list(vendor):
     return arranged_file_list
 
 
+
 def product_file_mapping(vendor):
     """ 
     Maps the files with respect to product names.\n
@@ -47,18 +49,18 @@ def product_file_mapping(vendor):
                 scrape_elements.products.get(vendor)['products'][str(os.path.splitext(f)[0])] = str(str((Path(__file__).parent.absolute()))+"\\assets\\"+str(vendor)+"\\"+str(Path(f)))
                 #dude wtf ...
 
+
+
 #TODO - comment
 def vendor_folder_mapping():
 
     folder_list = os.listdir(str(Path(__file__).parent.absolute())+"\\assets\\")
     if (len(folder_list) == 0):
-        print(" - NO VENDOR FOUND - \nPlease read instructions again!")
-         #TODO - THROW EXCEPTION
+        raise Exception(" - NO VENDOR FOUND - \nPlease read instructions again!")
     else:
         for folder in folder_list:
             scrape_elements.products[folder] = {"products":{}}
-    
-    #print(folder_list)
+ 
     
 
 def menu_add_vendors(vendor_selection):
@@ -82,6 +84,8 @@ def menu_add_vendors(vendor_selection):
         temp = {"name":vendor}#,"disabled":"cause"}
         new_vendor_selection[0].get("choices").append(temp)
     return new_vendor_selection
+
+
 
 def menu_add_products(product_selection):
     """
@@ -113,13 +117,16 @@ def menu_add_products(product_selection):
                         break
             if flag == 0:
                 new_product_selection[0].get("choices").append(temp)
-           
-                        
+
     return new_product_selection
+
+
+
 
 async def timeout(time):
     """Simple timeout, takes time as seconds"""
     await asyncio.sleep(time)
+
    
 
 #TODO - implement this when you decide page management
