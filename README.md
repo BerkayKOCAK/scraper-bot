@@ -1,5 +1,5 @@
 # scraper-bot
-This project is about creating a scraper via Python 3.7 using Beautiful Soup 4.9.0
+Local scraper application.
 
 ## Requirements & Install
 You need to have these following packages in your environment :
