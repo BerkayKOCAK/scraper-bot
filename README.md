@@ -6,4 +6,9 @@ You need to have these following packages in your environment :
 beautifulsoup4==4.9.0
 PyInquirer==1.0.3
 pyfiglet==0.7
-To install packages in requirements.txt simply run | pip install -r requirements.txt
+
+To install packages in requirements.txt simply run | .. code:: shell
+
+    pip install -r requirements.txt
+
+ 
