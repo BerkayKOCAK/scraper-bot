@@ -14,6 +14,7 @@ import asyncio
 from pathlib import Path
 from src import scrape_elements
 #import scrape_elements
+from termcolor import colored 
 
 
 def get_file_list(vendor):
@@ -132,7 +133,23 @@ async def timeout(time):
     """Simple timeout, takes time as seconds"""
     await asyncio.sleep(time)
 
-   
+def instructions():
+    print(colored('Welcome to scraper-bot', 'green'), colored('\nInstructions : ', 'yellow'))
+    print(colored('     * ', 'red'), colored('Scraping operation needs a html content to work and resumation of this content changes for every vendor.', 'cyan'))
+    print(colored('     * ', 'red'), colored('Thus, decide which vendor websites you want to work first than get their html content.', 'cyan'))
+    print(colored('     * ', 'red'), colored('Html content shall not be vendors main page it must be the page where vendor lists the product', 'cyan'))
+    print(colored('     * ', 'red'), colored('After getting desired content you shall download the page to put into scraping', 'cyan'))
+    print(colored('     * ', 'red'), colored('You shall put the downloaded page under assets folder like => ','cyan'), colored ('assets/vendor-name/product-page.html','cyan',attrs=['bold','underline']))
+    print(colored('     * ', 'red'), colored('After uploading html files, you need to specify which dom elements will be scraped if vendor is not in default vendors.', 'cyan'))
+    print(colored('     * ', 'red'), colored('  -Default vendors : hepsiburada, vatan, gittigidiyor, n11, teknosa, mediamarkt, trendyol, akakçe, cimri, istanbulbilişim, amazon.tr ', 'magenta'))
+    print(colored('     * ', 'red'), colored('To modify default vendors you need to go src/scrape_element.py', 'cyan'))
+    print(colored('     * ', 'red'), colored('Product html page names are important because application will categorize by the file names', 'cyan'))
+    print(colored('-------------------------------------------------------------------------------------------------------------------------------', 'grey'))
+    print(colored('@ COMING SOON! A page aligner for products with multiple html pages to scrape from same vendor', 'blue'))
+    print(colored('@ COMING SOON! A Crawler to get html pages automatically with product name will be implemented', 'blue'))
+    print(colored('-------------------------------------------------------------------------------------------------------------------------------', 'grey'))
+    #print(colored('     * ', 'red'), colored('', 'cyan'))
+    
 
 #TODO - implement this when you decide page management
 def product_subpage_aligner():

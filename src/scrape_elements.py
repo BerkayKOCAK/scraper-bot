@@ -53,18 +53,47 @@ websites = [
 
 #EXAMPLE USAGE
 """
-products = {
-    
-    "Hepsiburada" : 
+FOR WEBSITES
+    websites = [
         {
-            'products' : {}
-            #key: product name, value: file path
-        },
-    "Vatan" : 
-        {
-            'products' : {}
-            #key: product name, value: file path
+        "vendor_name" : 
+            {
+                "vendor_name_to_call": "examplesite",
+                'product-scope' :
+                        #This item is for locating listing element in dom content, give its tag and class name to locate.
+                    {
+                        'element': 'div',
+                        'name': 'box product'
+                    },        
+                'child-element' : 
+                        #This item is for locating listed product element in dom content, give its tag and class name to locate.
+                        #Class names are generic with regex to look for word price, title etc. 
+                        #Regex is not a must if you are sure class names of the target elements wont change.
+
+                    {
+                        'title': 'h3',
+                        'title_regex' : '.*title.*',
+                        'price': 'span',
+                        'price_regex' : '.*price.*',
+                        'old_price': 'del'
+                    }
+            }
         }
+    ]
+////////////////////////////////////////////////////////////////////////
+FOR PRODUCTS :
+    products = {
+        
+        "Hepsiburada" : 
+            {
+                'products' : {}
+                #key: product name, value: file path
+            },
+        "Vatan" : 
+            {
+                'products' : {}
+                #key: product name, value: file path
+            }
 }
 """
 products = {}
@@ -80,5 +109,5 @@ print(str(products.get("Hepsiburada")))
 
 for target_list in products.keys():
    print(str(target_list))
-   
+
 """

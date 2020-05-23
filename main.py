@@ -73,7 +73,7 @@ def main ():
     f = Figlet(font='cyberlarge')
     print(f.renderText(' - SCRAPER - '))
     print(f.renderText(' * By Berkay * '))
-
+    utils.instructions()
 
     try:
         utils.vendor_folder_mapping()
