@@ -12,7 +12,7 @@ To install packages in requirements.txt simply run ;
     pip install -r requirements.txt
 
 ## Instructions
-   *  Scraping operation needs a html content to work and resumation of this content changes for every vendor.
+   *  Scraping operation needs a html content to work and implementation of this content changes for every vendor.
    *  Thus, decide which vendor websites you want to work first than get their html content.
    *  Html content shall not be vendors main page it must be the page where vendor lists the product
    *  After getting desired content you shall download the page to put into scraping

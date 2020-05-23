@@ -135,7 +135,7 @@ async def timeout(time):
 
 def instructions():
     print(colored('Welcome to scraper-bot', 'green'), colored('\nInstructions : ', 'yellow'))
-    print(colored('     * ', 'red'), colored('Scraping operation needs a html content to work and resumation of this content changes for every vendor.', 'cyan'))
+    print(colored('     * ', 'red'), colored('Scraping operation needs a html content to work and implementation of this content changes for every vendor.', 'cyan'))
     print(colored('     * ', 'red'), colored('Thus, decide which vendor websites you want to work first than get their html content.', 'cyan'))
     print(colored('     * ', 'red'), colored('Html content shall not be vendors main page it must be the page where vendor lists the product', 'cyan'))
     print(colored('     * ', 'red'), colored('After getting desired content you shall download the page to put into scraping', 'cyan'))
