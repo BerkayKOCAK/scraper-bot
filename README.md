@@ -1,5 +1,5 @@
 # scraper-bot
-Local scraper application.
+Local scraper application. Offline resource use cases only at the moment but will support online data gathering from websites soon.
 
 ## Requirements & Install
 You need to have these following packages in your environment :
