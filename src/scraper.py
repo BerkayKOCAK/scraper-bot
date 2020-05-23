@@ -10,7 +10,7 @@
 
 from bs4 import BeautifulSoup
 import re
-from src import utils, scrape_elements
+from src import utils, scrape_elements, csv_lib
 from pathlib import Path
 import os
 import asyncio
@@ -84,6 +84,8 @@ async def product_scraper(taskName,soup,website,product):
         #Same applies for the product.
     """
     #print("VENDOR : "+website.get("name")+" PRODUCT : "+product)
+    scrape_array = []
+    
     try:
         
         product_elements = soup.find_all(website["product-scope"]["element"], class_= website["product-scope"]["name"])
@@ -95,17 +97,23 @@ async def product_scraper(taskName,soup,website,product):
             child_title = child.find(website["child-element"]["title"], {"class" : regex_title})
             child_price = child.find(website["child-element"]["price"], {"class" : regex_price})
             child_old_price = child.find(website["child-element"]["old_price"], {"class" : regex_price})
-            
+            scrape_item = {}
             #strip the text from dom element
-            #TODO - Write scraped data to a csv
+            # headers = ['productName', 'price(TL)',"old_price(TL)"]
             if child_title:
-                print(taskName+" PRODUCT : "+ child_title.text.strip())
+                print(taskName+" productName : "+ child_title.text.strip())
+                scrape_item["productName"] = child_title.text.strip()
             
             if child_price:
                 print( taskName+ " PRICE : "+ child_price.text.strip())
+                scrape_item["price(TL)"] = child_price.text.strip()
             
             if child_old_price:
                 print(taskName+ " OLD PRICE : "+ child_old_price.text.strip())
+                scrape_item["old_price(TL)"] = child_old_price.text.strip()
+            
+            scrape_array.append(scrape_item)
+        csv_lib.write_csv(website.get("name"),product,scrape_array)
     except Exception as identifier:
         print("ERROR IN" + taskName +" PRODUCT-SCRAPER "+ str(identifier))
 

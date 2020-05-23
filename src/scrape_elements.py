@@ -70,9 +70,15 @@ products = {
 products = {}
 
 """
+examples:
+
 print(str(products.get("Hepsiburada")))
+
 products.get("Hepsiburada")['key2'] = 'for'
+
 print(str(products.get("Hepsiburada")))
+
 for target_list in products.keys():
    print(str(target_list))
+   
 """
