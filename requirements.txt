@@ -1,3 +1,4 @@
 beautifulsoup4==4.9.0
 PyInquirer==1.0.3
 pyfiglet==0.7
+prompt_toolkit==1.0.14
