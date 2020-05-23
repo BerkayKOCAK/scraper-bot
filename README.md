@@ -7,7 +7,8 @@ beautifulsoup4==4.9.0
 PyInquirer==1.0.3
 pyfiglet==0.7
 
-To install packages in requirements.txt simply run | .. code:: shell
+To install packages in requirements.txt simply run | 
+.. code:: shell
 
     pip install -r requirements.txt
 
