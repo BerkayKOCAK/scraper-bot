@@ -4,6 +4,8 @@
 
    Includes:
     * scraper_init
+    * scraper_queue
+    * product_scraper
 """
 
 from bs4 import BeautifulSoup
@@ -12,24 +14,17 @@ from src import utils, scrape_elements
 from pathlib import Path
 import os
 import asyncio
-#TODO - comment
+
+
 async def scraper_init (selected_vendors,selected_products):
-    
+    """ Initializer for scraping operation """
     print("SCARAPER STARTS : ")
     for vendor in selected_vendors:
         print(" - Vendor : "+vendor)
-        """
-            file_list = utils.get_file_list(vendor) 
-            utils.product_file_mapping(vendor)
-            print("vendor "+vendor+" products in map : "+str(scrape_elements.products))
-            if not file_list:
-                print(" No file Found For : "+vendor)
-            else
-        """ 
         #TODO - check if vendors.products is empty 
+        #print("situation : "+str(bool(scrape_elements.products.get(vendor)['products'])))
         await scraper_queue(vendor,selected_products)
     
-
     #maybe also parallelize vendors instead of a blocking loop
     """await asyncio.gather(
             scraper_queue("A",["hepsiburada"],file_list),
@@ -37,9 +32,12 @@ async def scraper_init (selected_vendors,selected_products):
             scraper_queue("C",["hepsiburada"],file_list),
         ) """
 
-#TODO - review, comment
-async def scraper_queue(vendor,selected_products):
 
+
+async def scraper_queue(vendor,selected_products):
+    """ Queues all the scraping tasks to work in parallel.
+        Simply appends tasks to a task array and when a task returns, removes it from the arrays .
+    """
     count = 0
     tasks = []
     
@@ -76,9 +74,15 @@ async def scraper_queue(vendor,selected_products):
     except Exception as e:
         print(" @@@@ ERROR IN QUEUE  @@@@ \n MESSAGE : "+ str(e))
 
-#TODO - comment
+
+
 async def product_scraper(taskName,soup,website,product):
-    
+    """ 
+        This is where the magic happens.\n
+        It gets dom elements in soup and then finds the desired ones via beautifulsoup\n
+        To operate, it needs to know which elements will be scraped thus the website item must include structure similiar to one in scrape_elements.website\n
+        #Same applies for the product.
+    """
     #print("VENDOR : "+website.get("name")+" PRODUCT : "+product)
     try:
         

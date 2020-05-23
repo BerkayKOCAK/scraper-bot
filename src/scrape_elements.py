@@ -1,9 +1,12 @@
-#TODO - comment
-
-#Websites has different kind of dom elements and management for each unique vendor.
-#Thus you need to add your elements to scrape like default ones. (hepsiburada,vatan,gittigidiyor...) 
-#Website names are case sensitive!
-#Non used items can be NULL.
+"""
+    #Websites has different kind of dom elements and management for each unique vendor.
+    #Thus you need to add your elements to scrape like default ones. (hepsiburada,vatan,gittigidiyor...) 
+    #Website names are case sensitive!
+    #Non used items can be NULL.
+    Includes:
+        * websites
+        * products
+"""
 websites = [
     {
     "hepsiburada" : 

@@ -3,6 +3,11 @@
 
    Includes:
     * get_file_list
+    * product_file_mapping
+    * vendor_folder_mapping
+    * menu_add_vendors
+    * menu_add_products
+    * timeout
 """
 import os
 import asyncio
@@ -106,11 +111,11 @@ def menu_add_products(product_selection):
         for product in scrape_elements.products.get(vendor)['products'].keys():
             flag = 0
             temp = {"name":product}#,"disabled":"cause"}
-            print("choices : "+str(new_product_selection[0].get("choices")))
+            #print("choices : "+str(new_product_selection[0].get("choices")))
             
             for index in new_product_selection[0].get("choices"):
               
-                print("index: "+str(index))
+                #print("index: "+str(index))
                 if hasattr(index, 'get'):
                     if product == index.get("name"): 
                         flag = 1   

@@ -79,7 +79,7 @@ def main ():
         utils.vendor_folder_mapping()
         vendor_selection = utils.menu_add_vendors(template_vendor_selection)
     except Exception as identifier:
-        print(" - ERROR AT MAPPING INITALIZE -")
+        print(" - ERROR AT MAPPING INITIALIZE -")
         print(identifier)
     
     while(True):
@@ -91,9 +91,8 @@ def main ():
 
             for vendor in vendors['vendors']:
                 utils.product_file_mapping(vendor)
-            
-            print(scrape_elements.products)
             product_selection = utils.menu_add_products(template_product_selection)
+            
             if(len(product_selection[0].get("choices"))>1):
                 products = prompt(product_selection, style=style2)
                 if (len(products['products']) != 0):
