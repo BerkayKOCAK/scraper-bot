@@ -34,7 +34,7 @@ To install packages in requirements.txt simply run ;
         Lets say thereis  bilgisayar.html,  bilgisayar_1.html, bilgisayar_2.html files.
         It takes bilgisayar.html as category and adds it as "bilgisayar". Then if other files includes "bilgisayar" as substring and "_" symbol, aligns them as sub-pages.
         
-        *Category name must NOT include "_" symbol 
+        *Category name must NOT include "_"  
         
         *Sub pages which belongs to a category must include "_"
         
