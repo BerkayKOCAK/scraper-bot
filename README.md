@@ -15,7 +15,9 @@ To install packages in requirements.txt simply run ;
 
     pip install -r requirements.txt
 
-## Instructions
+## Documentation
+
+### Instructions
    *  Scraping operation needs a html content to work and implementation of this content changes for every vendor.
    *  Thus, decide which vendor websites you want to work first than get their html content.
    *  Html content shall not be vendors main page it must be the page where vendor lists the product
@@ -26,9 +28,16 @@ To install packages in requirements.txt simply run ;
    *  To modify default vendors you need to go src/scrape_element.py
    *  Product html page names are important because application will categorize by the file names
 
-----------
+### Multiple Pages For A Product
+   *  Page management done as categorizing by regex.
+   *  For example; 
+        Lets say thereis  bilgisayar.html,  bilgisayar_1.html, bilgisayar_2.html files.
+        It takes bilgisayar.html as category and adds it as "bilgisayar". Then if other files includes "bilgisayar" as substring and "_" symbol, aligns them as sub-pages.
+        *Thus category name must NOT include "_" symbol and
+        *Sub pages which belongs to a category must include "_"
+    (Folder based categorization might be implemented instead of symbol labeling)
 
-@ COMING SOON! A page aligner for products with multiple html pages to scrape from same vendor.
+----------
 
 @ COMING SOON! A Crawler to get html pages automatically with product name will be implemented.
 

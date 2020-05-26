@@ -38,22 +38,56 @@ def get_file_list(vendor):
     return arranged_file_list
 
 
-
+#TODO - Make page aligner folder based not some funky symbol -> "_"
+# Bilgisayar/ -> Bilgisayar1,bilgisayar2,bilg3.....  
 def product_file_mapping(vendor):
     """ 
     Maps the files with respect to product names.\n
     Categorizes via vendor names.
+    Then aligns sub-pages with product categories.
     """
-    if os.path.exists(str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor)):
+    vendor_path = str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor)
+    
+    if os.path.exists(vendor_path):
 
-        file_list =  os.listdir(str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor))
-        for f in file_list:
+        file_list =  os.listdir(vendor_path)
+       
+        category_list = product_subpage_aligner(file_list)
 
-            if (f.find(".html") < 0):
-                print("File "+f+" cannot be scraped because it is not a html file !")
+        for category in category_list:
+            matching_files = [s for s in file_list if category in s and s.find(".html") > 0 ]
+            for file_holder in matching_files:
+                if (file_holder.find(".html") < 0):
+                    print("file  "+file_holder+" cannot be scraped because it is not a html file !")
+                else:
+                    #file_name = str(os.path.splitext(file_holder)[0])
+                    file_path = str(vendor_path + "\\" + str(Path(file_holder)))
+                    try:
+                        scrape_elements.products.get(vendor)['products'][category].append(file_path)
+                    except KeyError:
+                        scrape_elements.products.get(vendor)['products'][category] = [file_path]
+                    
+
+
+def product_subpage_aligner(file_list):
+    """
+        Returns category names of the products, for example if there is bilgisayar.html,  bilgisayar_1.html, bilgisayar_2.html
+        Takes bilgisayar.html as category and adds it to returned array as "bilgisayar". 
+        *Thus category name must NOT include "_" symbol and
+        *Sub pages which belongs to a category must include "_"
+    """
+    regex_array = []
+    for file_holder in file_list:
+        if (file_holder.find(".html") < 0):
+                print("File "+file_holder+" cannot be added as product, it is not a html file !")
+        else:
+            file_name = str(os.path.splitext(file_holder)[0])
+            if (file_name.find("_") < 0 ):
+                regex_array.append(file_name)
             else:
-                scrape_elements.products.get(vendor)['products'][str(os.path.splitext(f)[0])] = str(str((Path(__file__).parent.absolute()))+"\\assets\\"+str(vendor)+"\\"+str(Path(f)))
-                #dude wtf ...
+                pass
+
+    return regex_array
 
 
 
@@ -145,12 +179,9 @@ def instructions():
     print(colored('     * ', 'red'), colored('To modify default vendors you need to go src/scrape_element.py', 'cyan'))
     print(colored('     * ', 'red'), colored('Product html page names are important because application will categorize by the file names', 'cyan'))
     print(colored('-------------------------------------------------------------------------------------------------------------------------------', 'grey'))
-    print(colored('@ COMING SOON! A page aligner for products with multiple html pages to scrape from same vendor', 'blue'))
+    #IT CAME print(colored('@ COMING SOON! A page aligner for products with multiple html pages to scrape from same vendor', 'blue'))
     print(colored('@ COMING SOON! A Crawler to get html pages automatically with product name will be implemented', 'blue'))
     print(colored('-------------------------------------------------------------------------------------------------------------------------------', 'grey'))
     #print(colored('     * ', 'red'), colored('', 'cyan'))
     
 
-#TODO - implement this when you decide page management
-def product_subpage_aligner():
-    return 0

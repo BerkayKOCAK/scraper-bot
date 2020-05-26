@@ -38,25 +38,32 @@ async def scraper_queue(vendor,selected_products):
     """ Queues all the scraping tasks to work in parallel.
         Simply appends tasks to a task array and when a task returns, removes it from the arrays .
     """
-    count = 0
+    count = 1
     tasks = []
     
     try:    
         for productName in selected_products: 
-            
-            count = count + 1
-            fileToOpen =  scrape_elements.products.get(vendor)['products'].get(productName)
-            if fileToOpen != None:
-                if os.path.isfile(fileToOpen):
-                    if(scrape_elements.websites[0].get(str(vendor)) != None):
-                        with open(fileToOpen, encoding='utf8') as infile:
-                            soup = BeautifulSoup(infile, "html.parser")
+            page = 1
+    
+            fileListToOpen =  scrape_elements.products.get(vendor)['products'].get(productName)
+            if fileListToOpen != None:
 
-                            print("WORKER "+str(count)+" STARTING SCRAPING FOR VENDOR : "+ str(vendor)+" and PRODUCT : "+productName)
-                            tasks.append(asyncio.ensure_future(product_scraper(vendor+"_"+str(count), soup, scrape_elements.websites[0].get(vendor), productName )))      
-                    else:
-                        print(" 000 Cannot Found Vendor "+ vendor +" in mapping ! 000")
-                        pass           
+                for fileToOpen in fileListToOpen: 
+                    if os.path.isfile(fileToOpen):
+                        if(scrape_elements.websites[0].get(str(vendor)) != None):
+                            with open(fileToOpen, encoding='utf8') as infile:
+                                soup = BeautifulSoup(infile, "html.parser")
+
+                                print("CREATING WORKER_"+str(count)+" FOR VENDOR : "+ str(vendor)+" AND PRODUCT : "+productName + " FOR PAGE : "+str(page))
+                                tasks.append(asyncio.ensure_future(product_scraper(vendor+"_"+str(count), soup, scrape_elements.websites[0].get(vendor), productName )))
+                                count = count + 1  
+                                page = page + 1    
+                        else:
+                            print(" 000 Cannot Found Vendor "+ vendor +" in mapping ! 000")
+                            pass
+            else:
+                print("On Vendor - "+ vendor +" - No File Found For Product : "+productName)
+                #Unnecessary info, u might prune it.           
                              
                 
         #TODO - For bigger data divide task management to batches and limit the parallelized tasks to 10. 
