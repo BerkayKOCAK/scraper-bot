@@ -38,7 +38,7 @@ To install packages in requirements.txt simply run ;
         
         *Sub pages which belongs to a category must include "_"
         
-    (Folder based categorization might be implemented instead of symbol labeling)
+  (Folder based categorization might be implemented instead of symbol labeling)
 
 ----------
 
