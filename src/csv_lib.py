@@ -12,13 +12,19 @@ def write_csv(vendor,product,scrape_array):
         os.makedirs('output')
     if not os.path.exists('output/'+vendor):
         os.makedirs('output/'+vendor)
-    f = open('output/'+vendor+'/'+vendor+'-'+product+'.csv', 'w')
+    if os.path.exists('output/'+vendor+'/'+vendor+'-'+product+'.csv'):
+        write_mode = 'a'
+    else:
+        write_mode = 'w'
+    f = open('output/'+vendor+'/'+vendor+'-'+product+'.csv', write_mode)
+    #if you make write mode append, it will write headers for every new append request !
 
     with f:
     
         headers = ['productName', 'price(TL)',"old_price(TL)"]
-        writer = csv.DictWriter(f, fieldnames=headers)    
-        writer.writeheader()
+        writer = csv.DictWriter(f, fieldnames=headers) 
+        if write_mode == 'w':   
+            writer.writeheader()
         for target_list in scrape_array:
             writer.writerow(target_list)
 

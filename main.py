@@ -78,6 +78,7 @@ def main ():
     try:
         utils.vendor_folder_mapping()
         vendor_selection = utils.menu_add_vendors(template_vendor_selection)
+        #TODO - delete outputs completely or take it to a old_outputs folder
     except Exception as identifier:
         print(" - ERROR AT MAPPING INITIALIZE -")
         print(identifier)

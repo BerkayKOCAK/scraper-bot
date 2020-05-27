@@ -94,20 +94,44 @@ async def product_scraper(taskName,soup,website,product):
     scrape_array = []
     
     try:
-        
-        product_elements = soup.find_all(website["product-scope"]["element"], class_= website["product-scope"]["name"])
-        regex_title = re.compile(website["child-element"]['title_regex'])
-        regex_price = re.compile(website["child-element"]['price_regex'])
 
+        
+        if website["product-scope"]["name"]:
+            regex_class_name = re.compile(website["product-scope"]["name"])
+        else:
+            regex_class_name = ''
+        if website["child-element"]['title_regex']:
+            regex_title = re.compile(website["child-element"]['title_regex'])
+            
+        else:
+            regex_title = ''
+        if website["child-element"]['price_regex']:
+            regex_price = re.compile(website["child-element"]['price_regex'])
+        else:
+           regex_price = ''
+        
+        product_elements = soup.find_all(website["product-scope"]["element"], class_= regex_class_name )
         for child in product_elements:
             
-            child_title = child.find(website["child-element"]["title"], {"class" : regex_title})
+            child_title_list = child.find_all(website["child-element"]["title"], {"class" : regex_title})
             child_price = child.find(website["child-element"]["price"], {"class" : regex_price})
             child_old_price = child.find(website["child-element"]["old_price"], {"class" : regex_price})
             scrape_item = {}
+
+            if len(child_title_list) > 1:
+                child_title = ""
+                for substr in child_title_list:
+                    child_title = child_title +" "+ substr.text.strip()
+            else:
+                child_title = child_title_list[0]
+           
             #strip the text from dom element
             # headers = ['productName', 'price(TL)',"old_price(TL)"]
-            if child_title:
+           
+            if isinstance(child_title, str):
+                print(taskName+" productName : "+ child_title)
+                scrape_item["productName"] = child_title
+            else:
                 print(taskName+" productName : "+ child_title.text.strip())
                 scrape_item["productName"] = child_title.text.strip()
             
@@ -121,6 +145,7 @@ async def product_scraper(taskName,soup,website,product):
             
             scrape_array.append(scrape_item)
         csv_lib.write_csv(website.get("name"),product,scrape_array)
+        #TODO - append if already created
     except Exception as identifier:
         print("ERROR IN" + taskName +" PRODUCT-SCRAPER "+ str(identifier))
 

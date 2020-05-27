@@ -23,18 +23,16 @@ def get_file_list(vendor):
     Returns file paths. 
     """
     arranged_file_list = []
-    #print("CWD : "+ str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor))
-    if os.path.exists(str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor)):
+    vendor_path = str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor)
+    if os.path.exists(vendor_path):
         
-        file_list =  os.listdir(str(Path(__file__).parent.absolute())+"\\assets\\"+str(vendor))
+        file_list =  os.listdir(vendor_path)
         for f in file_list:
             if f.find(".html") < 0:
                 print("File "+f+" cannot be scraped because it is not a html file !")
                 
             else:
-                arranged_file_list.append(str((Path(__file__).parent.absolute()))+"\\assets\\"+str(vendor)+"\\"+str(Path(f)))
-                #wow ! worst path management ever dumbass. make it generic.
-
+                arranged_file_list.append(vendor_path+"\\"+str(Path(f)))
     return arranged_file_list
 
 
