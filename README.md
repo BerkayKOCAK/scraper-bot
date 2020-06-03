@@ -26,7 +26,7 @@ To install packages in requirements.txt simply run ;
    *  After uploading html files, you need to specify which dom elements will be scraped if vendor is not in default vendors.
            **Default vendors :** hepsiburada, vatan, gittigidiyor, n11, teknosa, mediamarkt, trendyol, akakçe, cimri, istanbulbilişim, amazon.tr 
    *  To modify default vendors you need to go src/scrape_element.py
-   *  Product html page names are important because application will categorize by the file names
+   *  Name of the html pages are important because product categorization is done via their names.
    
 #### Example Assets
 You can find example web pages of default vendors in following link; https://drive.google.com/drive/folders/1rtpoT3sJrdUf2UDkZgZNZ5NBcMQMvE22?usp=sharing
