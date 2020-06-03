@@ -27,6 +27,9 @@ To install packages in requirements.txt simply run ;
            **Default vendors :** hepsiburada, vatan, gittigidiyor, n11, teknosa, mediamarkt, trendyol, akakçe, cimri, istanbulbilişim, amazon.tr 
    *  To modify default vendors you need to go src/scrape_element.py
    *  Product html page names are important because application will categorize by the file names
+   
+#### Example Assets
+You can find example web pages of default vendors in following link; https://drive.google.com/drive/folders/1rtpoT3sJrdUf2UDkZgZNZ5NBcMQMvE22?usp=sharing
 
 ### Multiple Pages For A Product
    *  Page management handled via regex and labeling.
