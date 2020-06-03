@@ -18,15 +18,17 @@ To install packages in requirements.txt simply run ;
 ## Documentation
 
 ### Instructions
-   *  Scraping operation needs a html content to work and implementation of this content changes for every vendor.
-   *  Thus, decide which vendor websites you want to work first than get their html content.
+   *  Scraping operation needs a html content to work and implementation of this content changes for every vendor.Thus, decide which vendor websites you want to work first than get their html content. 
    *  Html content shall not be vendors main page it must be the page where vendor lists the product
-   *  After getting desired content you shall download the page to put into scraping
-   *  You shall put the downloaded page under assets folder like =>  assets/vendor-name/product-page.html
-   *  After uploading html files, you need to specify which dom elements will be scraped if vendor is not in default vendors.
+   *  After getting desired content you shall download the page to under assets folder like =>  scraper-bot/src/assets/"vendor-name-here"/"product-name-here".html
+   *  After uploading html files, if vendor is not in default vendors then you need to specify which dom elements will be scraped.
            **Default vendors :** hepsiburada, vatan, gittigidiyor, n11, teknosa, mediamarkt, trendyol, akakçe, cimri, istanbulbilişim, amazon.tr 
-   *  To modify default vendors you need to go src/scrape_element.py
+   *  To modify default vendors you need to go scraper-bot/src/scrape_element.py (Guide in the comment section will lead you in there)
    *  Name of the html pages are important because product categorization is done via their names.
+   *  Finally, to run the program simply use;
+
+             python .\main.py
+   
    
 #### Example Assets
 You can find example web pages of default vendors in following link; https://drive.google.com/drive/folders/1rtpoT3sJrdUf2UDkZgZNZ5NBcMQMvE22?usp=sharing
