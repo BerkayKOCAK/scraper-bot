@@ -82,6 +82,7 @@ def main ():
     except Exception as identifier:
         print(" - ERROR AT MAPPING INITIALIZE -")
         print(identifier)
+        exit(0)
     
     while(True):
         

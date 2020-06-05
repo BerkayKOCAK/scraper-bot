@@ -16,7 +16,7 @@ def write_csv(vendor,product,scrape_array):
         write_mode = 'a'
     else:
         write_mode = 'w'
-    f = open('output/'+vendor+'/'+vendor+'-'+product+'.csv', write_mode)
+    f = open('output/'+vendor+'/'+vendor+'-'+product+'.csv', write_mode, newline='')
     #if you make write mode append, it will write headers for every new append request !
 
     with f:
@@ -28,10 +28,17 @@ def write_csv(vendor,product,scrape_array):
         for target_list in scrape_array:
             writer.writerow(target_list)
 
-#TODO - make a read func.   
-""" Example
-        arrayProduct = []
-        arrayProduct.append( {'productName' : 'Robert', 'price(TL)': 'Brown'})
-        arrayProduct.append( {'productName' : 'TURBOX ATM900110 Intel i5 8GB Ram 240GB Ssd 4GB Ekran Kartı Masaüstü Oyun Bilgisayarı', 'price(TL)': '2.075,00','old_price(TL)':'2.350,00'})
-        write_csv("hepsiburada","bilgisayar",arrayProduct)
-"""
+
+def read_csv (vendor,product):
+    """ Reades from ../output/'vendor'/'product-vendor.csv' """
+    with open('../output/'+vendor+'/'+vendor+'-'+product+'.csv') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=',')
+        line_count = 0
+        for row in csv_reader:
+            if line_count == 0:
+                print(f'Column names are: {", ".join(row)}')
+                line_count += 1
+            else:
+                print(f'\t{row} : ROW AS ARRAY\n')
+                line_count += 1
+        print(f'Processed {line_count} lines.')
