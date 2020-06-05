@@ -5,7 +5,7 @@ import csv
 import os
 
 
-#TODO - implement an append functionality for csv write
+
 def write_csv(vendor,product,scrape_array):
     """ creates a output file like "vendor-product.csv" and then writes mapped items in scrape_array"""
     if not os.path.exists('output'):
@@ -17,8 +17,7 @@ def write_csv(vendor,product,scrape_array):
     else:
         write_mode = 'w'
     f = open('output/'+vendor+'/'+vendor+'-'+product+'.csv', write_mode, newline='')
-    #if you make write mode append, it will write headers for every new append request !
-
+    
     with f:
     
         headers = ['productName', 'price(TL)',"old_price(TL)"]
@@ -27,6 +26,7 @@ def write_csv(vendor,product,scrape_array):
             writer.writeheader()
         for target_list in scrape_array:
             writer.writerow(target_list)
+
 
 
 def read_csv (vendor,product):

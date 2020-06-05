@@ -8,6 +8,8 @@
     * menu_add_vendors
     * menu_add_products
     * timeout
+    * product_subpage_aligner
+    * instructions
 """
 import os
 import asyncio
