@@ -31,6 +31,13 @@ def write_csv(vendor,product,scrape_array):
 
 def read_csv (vendor,product):
     """ Reades from ../output/'vendor'/'product-vendor.csv' """
+    if not os.path.exists('output'):
+        print("Output Folder Not Found! Scrape something first !!")
+        return
+    if not os.path.exists('output/'+vendor):
+        print("Vendor Folder In Output Not Found! Scrape something first !!")
+        return
+
     with open('../output/'+vendor+'/'+vendor+'-'+product+'.csv') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
